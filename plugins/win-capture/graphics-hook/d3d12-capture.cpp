@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <stdlib.h>
 #include "graphics-hook.h"
 
 #if COMPILE_D3D12_HOOK

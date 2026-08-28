@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <psapi.h>
 #include <inttypes.h>
+#include <stdlib.h>
 #include "graphics-hook.h"
 #ifdef OBS_LEGACY
 #include "../graphics-hook-ver.h"
