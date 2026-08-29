@@ -48,14 +48,12 @@ static inline HANDLE open_process(DWORD desired_access, bool inherit_handle, DWO
 
 static inline int inject_library(HANDLE process, const wchar_t *dll)
 {
-	return inject_library_obf(process, dll, "E}mo|d[cefubWk~bgk", 0x7c3371986918e8f6, "Rqbr`T{cnor{Bnlgwz",
-				  0x81bf81adc9456b35, "]`~wrl`KeghiCt", 0xadc6a7b9acd73c9b, "Zh}{}agHzfd@{",
-				  0x57135138eb08ff1c, "DnafGhj}l~sX", 0x350bfacdf81b2018);
+	return inject_library_obf(process, dll, INJECT_LIBRARY_OBF_ARGUMENTS);
 }
 
 static inline int inject_library_safe(DWORD thread_id, const wchar_t *dll)
 {
-	return inject_library_safe_obf(thread_id, dll, "[bs^fbkmwuKfmfOvI", 0xEAD293602FCF9778ULL);
+	return inject_library_safe_obf(thread_id, dll, INJECT_LIBRARY_SAFE_OBF_ARGUMENTS);
 }
 
 static inline int inject_library_full(DWORD process_id, const wchar_t *dll)
