@@ -11,6 +11,11 @@
 #include <util/windows/obfuscate.h>
 #endif
 
+/* ECSEngine addition: releases what the character observation opened in this process. The hook itself is
+ * installed by the recorder rather than from here, since installing it is also what loads this library into a
+ * target - which happens whether or not the capture hook was ever injected. Defined in src/SnapshotInputHook.c. */
+void snapshot_input_hook_free(void);
+
 #define DEBUG_OUTPUT
 
 #ifdef DEBUG_OUTPUT
@@ -871,6 +876,10 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD reason, LPVOID unused1)
 		}
 
 	} else if (reason == DLL_PROCESS_DETACH) {
+		/* ECSEngine addition: released before the early return below, since it is installed independently of
+		 * the capture and would otherwise outlive the library in a process that never captured. */
+		snapshot_input_hook_free();
+
 		if (!dup_hook_mutex) {
 			return true;
 		}
