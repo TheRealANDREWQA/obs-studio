@@ -838,6 +838,15 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD reason, LPVOID unused1)
 
 		dll_inst = hinst;
 
+		// ECSEngine addition: before the duplicate check's early return. The restore succeeds only when the library was
+		// injected at spawn. It fails in the tester, which loads the library only to call its exports, so the detours
+		// attach only in a spawned target.
+		// A failed attach is ignored, since failing DllMain at spawn aborts the target with a system error dialog
+		// (TODO: report it).
+		if (snapshot_hook_restore_imports()) {
+			snapshot_window_detours_attach();
+		}
+
 		if (!init_dll()) {
 			DbgOut("[OBS] Duplicate hook library");
 			return false;
